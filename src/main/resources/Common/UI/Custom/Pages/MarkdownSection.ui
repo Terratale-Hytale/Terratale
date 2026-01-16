@@ -1,0 +1,16 @@
+
+Group {
+    LayoutMode: Top;
+
+    Label #SecTitle {
+        Padding: (Bottom: 10);
+        Text: "";
+        Style: (FontSize: 18, TextColor: #ffffff);
+    }
+
+    Label #SecBody {
+        Text: "";
+        Padding: (Bottom: 10);
+        Style: (FontSize: 14, TextColor: #b4c8c9);
+    }
+}
