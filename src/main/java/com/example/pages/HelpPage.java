@@ -1,13 +1,8 @@
 package com.example.pages;
 
 import com.example.content.MarkdownSection;
-import com.example.content.block.HeadingBlock;
-import com.example.content.block.LineBreakBlock;
-import com.example.content.block.MarkdownBlock;
-import com.example.content.block.ParagraphBlock;
-import com.example.content.inline.BoldInline;
-import com.example.content.inline.InlineElement;
-import com.example.content.inline.TextInline;
+import com.example.content.block.*;
+import com.example.content.inline.*;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -88,6 +83,16 @@ public class HelpPage extends InteractiveCustomUIPage<Void> {
                     continue;
                 }
 
+                // ---------- SEPARADOR ----------
+                if (block instanceof SeparatorBlock) {
+                    cmd.append(
+                            sectionSelector + " #SecBody",
+                            "Pages/blocks/Separator.ui"
+                    );
+                    bodyIndex++;
+                    continue;
+                }
+
                 // ---------- PÁRRAFO ----------
                 if (block instanceof ParagraphBlock paragraph) {
                     cmd.append(
@@ -123,6 +128,18 @@ public class HelpPage extends InteractiveCustomUIPage<Void> {
                             cmd.set(
                                     paragraphSelector + "[" + inlineIndex + "] #Text.Text",
                                     bold.text()
+                            );
+                        }
+
+                        // ---------- CURSIVA ----------
+                        if (inline instanceof ItalicInline italic) {
+                            cmd.append(
+                                    paragraphSelector,
+                                    "Pages/inline/Italic.ui"
+                            );
+                            cmd.set(
+                                    paragraphSelector + "[" + inlineIndex + "] #Text.Text",
+                                    italic.text()
                             );
                         }
 

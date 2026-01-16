@@ -56,6 +56,31 @@ public final class MarkdownParser {
                 continue;
             }
 
+            // ---------- CITA ----------
+            if (line.startsWith(">")) {
+
+                int level = 0;
+                int i = 0;
+
+                while (i < line.length() && line.charAt(i) == '>') {
+                    level++;
+                    i++;
+                }
+
+                // saltar espacio opcional
+                if (i < line.length() && line.charAt(i) == ' ') {
+                    i++;
+                }
+
+                String content = line.substring(i);
+
+                currentBlocks.add(
+                        new QuoteBlock(level, parseInline(content))
+                );
+                continue;
+            }
+
+
             // ---------- PÁRRAFO ----------
             currentBlocks.add(
                     new ParagraphBlock(parseInline(line))
@@ -75,6 +100,8 @@ public final class MarkdownParser {
 
         int i = 0;
         while (i < line.length()) {
+
+            // ---------- BOLD ----------
             if (line.startsWith("**", i)) {
                 int end = line.indexOf("**", i + 2);
                 if (end != -1) {
@@ -84,8 +111,24 @@ public final class MarkdownParser {
                 }
             }
 
-            int next = line.indexOf("**", i);
-            if (next == -1) next = line.length();
+            // ---------- ITALIC ----------
+            if (line.startsWith("*", i)) {
+                int end = line.indexOf("*", i + 1);
+                if (end != -1) {
+                    result.add(new ItalicInline(line.substring(i + 1, end)));
+                    i = end + 1;
+                    continue;
+                }
+            }
+
+            // ---------- TEXTO NORMAL ----------
+            int next = line.length();
+
+            int nextBold = line.indexOf("**", i);
+            int nextItalic = line.indexOf("*", i);
+
+            if (nextBold != -1) next = Math.min(next, nextBold);
+            if (nextItalic != -1) next = Math.min(next, nextItalic);
 
             result.add(new TextInline(line.substring(i, next)));
             i = next;
@@ -93,4 +136,5 @@ public final class MarkdownParser {
 
         return result;
     }
+
 }
