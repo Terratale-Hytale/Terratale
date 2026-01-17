@@ -1,14 +1,10 @@
 package com.example.pages;
 
 import com.example.content.MarkdownSection;
-
-import com.example.content.block.*;
-import com.example.content.inline.BoldInline;
-import com.example.content.inline.InlineElement;
-import com.example.content.inline.ItalicInline;
-import com.example.content.inline.TextInline;
+import com.example.content.block.MarkdownBlock;
 import com.example.pages.renderer.BlockRendererRegistry;
 import com.example.pages.renderer.RenderContext;
+import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
@@ -21,12 +17,25 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class HelpPage extends InteractiveCustomUIPage<Void> {
+public class TestPage extends InteractiveCustomUIPage<TestPage.EventData> {
+
+    public static class EventData {
+        public static final BuilderCodec<EventData> CODEC =
+                BuilderCodec.builder(EventData.class, EventData::new).build();
+    }
 
     private final List<MarkdownSection> sections;
 
-    public HelpPage(PlayerRef playerRef, List<MarkdownSection> sections) {
-        super(playerRef, CustomPageLifetime.CantClose, null);
+
+    public TestPage(
+            PlayerRef playerRef,
+            List<MarkdownSection> sections
+    ) {
+        super(
+                playerRef,
+                CustomPageLifetime.CanDismissOrCloseThroughInteraction,
+                EventData.CODEC
+        );
         this.sections = sections;
     }
 
@@ -37,13 +46,12 @@ public class HelpPage extends InteractiveCustomUIPage<Void> {
             @Nonnull UIEventBuilder evt,
             @Nonnull Store<EntityStore> store
     ) {
-
-        cmd.append("Pages/Rules.ui");
+        cmd.append("Pages/Test.ui");
 
         for (int i = 0; i < sections.size(); i++) {
             MarkdownSection section = sections.get(i);
 
-            cmd.append("#ContentList", "Pages/MarkdownSection.ui");
+            cmd.append("#Container #ContentList", "Pages/MarkdownSection.ui");
             String sectionSelector = "#ContentList[" + i + "]";
 
             cmd.set(sectionSelector + " #SecTitle.Text", section.title());
@@ -55,4 +63,5 @@ public class HelpPage extends InteractiveCustomUIPage<Void> {
             }
         }
     }
+
 }

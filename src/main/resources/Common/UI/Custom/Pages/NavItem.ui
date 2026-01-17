@@ -1,0 +1,24 @@
+
+@NavItemStyleDefault = TextButtonStyle(
+    Default: (Background: #2b3542, LabelStyle: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+    Hovered: (Background: #3b4552, LabelStyle: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+    Pressed: (Background: #1b2532, LabelStyle: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center))
+);
+
+@NavItemStyleSelected = TextButtonStyle(
+    Default: (Background: #ffcc00, LabelStyle: (FontSize: 14, TextColor: #1b2532, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+    Hovered: (Background: #ffcc00, LabelStyle: (FontSize: 14, TextColor: #1b2532, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+    Pressed: (Background: #ffcc00, LabelStyle: (FontSize: 14, TextColor: #1b2532, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center))
+);
+
+Group {
+    Anchor: (Height: 36);
+    Padding: (Bottom: 6);
+    LayoutMode: Top;
+
+    TextButton #Btn {
+        Text: "Item";
+        Anchor: (Width: 190, Height: 36);
+        Style: @NavItemStyleDefault;
+    }
+}

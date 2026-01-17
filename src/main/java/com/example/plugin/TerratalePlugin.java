@@ -1,6 +1,7 @@
 package com.example.plugin;
 
 import com.example.commands.HelpCommand;
+import com.example.commands.TestCommand;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
@@ -25,6 +26,7 @@ public class TerratalePlugin extends JavaPlugin {
         PluginFolders.setup(this);
 
         getCommandRegistry().registerCommand(new HelpCommand());
+        getCommandRegistry().registerCommand(new TestCommand());
         getLogger().at(Level.INFO).log("Plugin setup complete!");
     }
 
