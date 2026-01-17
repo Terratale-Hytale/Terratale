@@ -1,7 +1,11 @@
-package com.example.content;
+package com.example.content.parser;
 
+import com.example.content.MarkdownSection;
 import com.example.content.block.*;
-import com.example.content.inline.*;
+import com.example.content.inline.BoldInline;
+import com.example.content.inline.InlineElement;
+import com.example.content.inline.ItalicInline;
+import com.example.content.inline.TextInline;
 
 import java.util.ArrayList;
 import java.util.List;

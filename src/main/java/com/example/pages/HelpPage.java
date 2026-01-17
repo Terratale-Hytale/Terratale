@@ -1,9 +1,12 @@
 package com.example.pages;
 
 import com.example.content.MarkdownSection;
-import com.example.content.block.*;
-import com.example.content.inline.*;
 
+import com.example.content.block.*;
+import com.example.content.inline.BoldInline;
+import com.example.content.inline.InlineElement;
+import com.example.content.inline.ItalicInline;
+import com.example.content.inline.TextInline;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;

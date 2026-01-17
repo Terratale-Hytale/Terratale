@@ -1,7 +1,7 @@
 package com.example.commands;
 
 import com.example.content.MarkdownLoader;
-import com.example.content.MarkdownParser;
+import com.example.content.parser.MarkdownParser;
 import com.example.content.MarkdownSection;
 import com.example.pages.HelpPage;
 import com.example.plugin.TerratalePlugin;
