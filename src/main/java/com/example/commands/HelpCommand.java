@@ -39,7 +39,7 @@ public class HelpCommand extends AbstractPlayerCommand {
             Path mdPath = TerratalePlugin.get()
                     .getDataDirectory()
                     .getParent()
-                    .resolve("Terratale/views/rules/sections/prueba.md");
+                    .resolve("Terratale/views/rules/sections/normas.md");
 
             List<String> lines = null;
             try {

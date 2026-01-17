@@ -56,31 +56,6 @@ public final class MarkdownParser {
                 continue;
             }
 
-            // ---------- CITA ----------
-            if (line.startsWith(">")) {
-
-                int level = 0;
-                int i = 0;
-
-                while (i < line.length() && line.charAt(i) == '>') {
-                    level++;
-                    i++;
-                }
-
-                // saltar espacio opcional
-                if (i < line.length() && line.charAt(i) == ' ') {
-                    i++;
-                }
-
-                String content = line.substring(i);
-
-                currentBlocks.add(
-                        new QuoteBlock(level, parseInline(content))
-                );
-                continue;
-            }
-
-
             // ---------- PÁRRAFO ----------
             currentBlocks.add(
                     new ParagraphBlock(parseInline(line))
@@ -112,7 +87,7 @@ public final class MarkdownParser {
             }
 
             // ---------- ITALIC ----------
-            if (line.startsWith("*", i)) {
+            if (line.startsWith("*", i) && !line.startsWith("**", i)) {
                 int end = line.indexOf("*", i + 1);
                 if (end != -1) {
                     result.add(new ItalicInline(line.substring(i + 1, end)));
@@ -128,7 +103,13 @@ public final class MarkdownParser {
             int nextItalic = line.indexOf("*", i);
 
             if (nextBold != -1) next = Math.min(next, nextBold);
-            if (nextItalic != -1) next = Math.min(next, nextItalic);
+
+            // ⚠️ ignorar '*' que en realidad es '**'
+            if (nextItalic != -1) {
+                if (nextItalic + 1 >= line.length() || line.charAt(nextItalic + 1) != '*') {
+                    next = Math.min(next, nextItalic);
+                }
+            }
 
             result.add(new TextInline(line.substring(i, next)));
             i = next;
@@ -136,5 +117,6 @@ public final class MarkdownParser {
 
         return result;
     }
+
 
 }

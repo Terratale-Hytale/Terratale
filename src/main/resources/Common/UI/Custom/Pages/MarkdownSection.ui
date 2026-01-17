@@ -1,10 +1,15 @@
+$PrimaryTheme = "PrimaryTheme.ui";
+
+@TitleStyle = $PrimaryTheme.@TitleStyle;
+@titlePadding = $PrimaryTheme.@titlePadding;
+
 Group {
     LayoutMode: Top;
 
     Label #SecTitle {
-        Padding: (Bottom: 8);
+        Padding: (...@titlePadding);
         Text: "";
-        Style: (FontSize: 18, TextColor: #ffffff);
+        Style: (...@TitleStyle);
     }
 
     Group #SecBody {

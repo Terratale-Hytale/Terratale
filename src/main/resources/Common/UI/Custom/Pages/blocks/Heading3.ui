@@ -1,12 +1,14 @@
+$PrimaryTheme = "../PrimaryTheme.ui";
+
+@Heading3Style = $PrimaryTheme.@Heading3Style;
+@heading3Padding = $PrimaryTheme.@heading3Padding;
+
 Group {
     LayoutMode: Left;
 
     Label #Text {
+        Padding: (...@heading3Padding);
         Text: "";
-        Style: (
-            FontSize: 15,
-            TextColor: #d0d0d0,
-            RenderBold: true
-        );
+        Style: (...@Heading3Style);
     }
 }
