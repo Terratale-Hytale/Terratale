@@ -22,6 +22,8 @@ import java.util.List;
 
 public class TestPage extends InteractiveCustomUIPage<TestPage.EventData> {
 
+    private String id = "";
+
     public static class EventData {
         public static final BuilderCodec<EventData> CODEC =
                 BuilderCodec.builder(EventData.class, EventData::new).build();
@@ -76,5 +78,7 @@ public class TestPage extends InteractiveCustomUIPage<TestPage.EventData> {
 
         }
     }
+
+
 
 }
