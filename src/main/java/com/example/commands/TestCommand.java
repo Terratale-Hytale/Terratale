@@ -5,6 +5,7 @@ import com.example.content.MarkdownSection;
 import com.example.content.parser.MarkdownParser;
 import com.example.pages.HelpPage;
 import com.example.pages.TestPage;
+import com.example.pages.navigation.MarkdownView;
 import com.example.plugin.TerratalePlugin;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -38,15 +39,20 @@ public class TestCommand extends AbstractPlayerCommand {
         Player player = (Player) store.getComponent(ref, Player.getComponentType());
 
         try {
-            Path mdPath = TerratalePlugin.get()
+            Path base = TerratalePlugin.get()
                     .getDataDirectory()
                     .getParent()
-                    .resolve("Terratale/views/rules/sections/normas.md");
+                    .resolve("Terratale/views/rules/sections");
 
-            List<String> lines = MarkdownLoader.loadLines(mdPath);
-            List<MarkdownSection> sections = MarkdownParser.parse(lines);
+            Path normas = base.resolve("normas.md");
+            Path prueba = base.resolve("prueba.md");
 
-            TestPage testPage = new TestPage(playerRef, sections);
+            List<MarkdownView> views = List.of(
+                    new MarkdownView("normas", "Normas", normas),
+                    new MarkdownView("prueba", "Prueba", prueba)
+            );
+
+            TestPage testPage = new TestPage(playerRef, views);
 
             player.getPageManager().openCustomPage(ref, store, testPage);
         }

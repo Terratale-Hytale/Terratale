@@ -1,7 +1,10 @@
 package com.example.pages;
 
+import com.example.content.MarkdownLoader;
 import com.example.content.MarkdownSection;
 import com.example.content.block.MarkdownBlock;
+import com.example.content.parser.MarkdownParser;
+import com.example.pages.navigation.MarkdownView;
 import com.example.pages.renderer.BlockRendererRegistry;
 import com.example.pages.renderer.RenderContext;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -24,19 +27,19 @@ public class TestPage extends InteractiveCustomUIPage<TestPage.EventData> {
                 BuilderCodec.builder(EventData.class, EventData::new).build();
     }
 
-    private final List<MarkdownSection> sections;
+    private final List<MarkdownView> views;
 
 
     public TestPage(
             PlayerRef playerRef,
-            List<MarkdownSection> sections
+            List<MarkdownView> sections
     ) {
         super(
                 playerRef,
                 CustomPageLifetime.CanDismissOrCloseThroughInteraction,
                 EventData.CODEC
         );
-        this.sections = sections;
+        this.views = sections;
     }
 
     @Override
@@ -48,19 +51,29 @@ public class TestPage extends InteractiveCustomUIPage<TestPage.EventData> {
     ) {
         cmd.append("Pages/Test.ui");
 
-        for (int i = 0; i < sections.size(); i++) {
-            MarkdownSection section = sections.get(i);
+        try {
+            MarkdownView view = views.get(1);
 
-            cmd.append("#Container #ContentList", "Pages/MarkdownSection.ui");
-            String sectionSelector = "#ContentList[" + i + "]";
+            List<String> lines = MarkdownLoader.loadLines(view.markdownPath());
+            List<MarkdownSection> sections = MarkdownParser.parse(lines);
 
-            cmd.set(sectionSelector + " #SecTitle.Text", section.title());
+            for (int i = 0; i < sections.size(); i++) {
+                MarkdownSection section = sections.get(i);
 
-            RenderContext ctx = new RenderContext(cmd, sectionSelector);
+                cmd.append("#Container #ContentList", "Pages/MarkdownSection.ui");
+                String sectionSelector = "#ContentList[" + i + "]";
 
-            for (MarkdownBlock block : section.blocks()) {
-                BlockRendererRegistry.render(block, ctx);
+                cmd.set(sectionSelector + " #SecTitle.Text", section.title());
+
+                RenderContext ctx = new RenderContext(cmd, sectionSelector);
+
+                for (MarkdownBlock block : section.blocks()) {
+                    BlockRendererRegistry.render(block, ctx);
+                }
             }
+        }
+        catch (Exception e) {
+
         }
     }
 

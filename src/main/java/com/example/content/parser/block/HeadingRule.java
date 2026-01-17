@@ -5,6 +5,7 @@ import com.example.content.parser.ParserContext;
 
 public class HeadingRule implements BlockRule {
 
+    //TODO: Arreglar que no funciona con Headings superiores a 2 ##
     @Override
     public boolean matches(String line) {
         return line.startsWith("## ");
