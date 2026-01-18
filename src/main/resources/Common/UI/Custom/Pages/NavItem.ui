@@ -1,4 +1,6 @@
 
+$C = "../Common.ui";
+
 @NavItemStyleDefault = TextButtonStyle(
     Default: (Background: #2b3542, LabelStyle: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
     Hovered: (Background: #3b4552, LabelStyle: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
@@ -13,12 +15,14 @@
 
 Group {
     Anchor: (Height: 36);
-    Padding: (Bottom: 6);
     LayoutMode: Top;
 
     TextButton #Btn {
         Text: "Item";
-        Anchor: (Width: 190, Height: 36);
+        Anchor: (Height: 36);
         Style: @NavItemStyleDefault;
+
     }
+
+    Group { FlexWeight: 1; }
 }
